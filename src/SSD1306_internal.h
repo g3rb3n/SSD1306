@@ -4,12 +4,6 @@
 #include <stdio.h>
 #include <Arduino.h>
 
-#if defined(__AVR__) || defined(__arm__)
-	#include <avr/pgmspace.h>
-#else
-	#include <pgmspace.h>
-#endif
-
 #define swap(a, b) { uint8_t t = a; a = b; b = t; }
 
 #define I2C_ADDRESS_SA0_0 0b0111100

@@ -3,6 +3,7 @@
 
 #include <SSD1306_internal.h>
 #include <ByteIO.h>
+#include <GraphicalMemory.h>
 #include <inttypes.h>
 
 namespace g3rb3n
@@ -11,13 +12,18 @@ namespace g3rb3n
   class SSD1306 : public Print
   {
     private:
+      uint8_t width = 128;
+      uint8_t height = 64;
       ByteIO* byteIO;
       uint8_t rstPin;
       bool rstEnabled;
+      GraphicalMemory* memory;
+      uint8_t pages = 8;
+      uint8_t columns = 128;
 
     public:
-      SSD1306(ByteIO* byteIO);
-      SSD1306(ByteIO* byteIO, uint8_t rstPin);
+      SSD1306(ByteIO* byteIO, GraphicalMemory* memory);
+      SSD1306(ByteIO* byteIO, GraphicalMemory* memory, uint8_t rstPin);
       ~SSD1306();
     	
     	void begin(void);
@@ -59,7 +65,7 @@ namespace g3rb3n
     	uint8_t getLCDHeight(void);
     	void setColor(uint8_t color);
     	void setDrawMode(uint8_t mode);
-    	uint8_t *getScreenBuffer(void);
+    	//uint8_t *getScreenBuffer(void);
 
     	// Font functions
     	uint8_t getFontWidth(void);
