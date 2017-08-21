@@ -6,7 +6,7 @@
 
 #include <Wire.h>
 
-#define I2C_FREQ 400000L	// I2C Frequency is 400kHz (fast as possible)
+#define I2C_FREQ 400000L	// I2C Frequency @ 400kHz, as fast as possible
 
 #ifdef ARDUINO_ARCH_ESP8266
   #define PINS_ON_BEGIN
