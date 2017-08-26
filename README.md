@@ -1,7 +1,7 @@
 # A fast and flexible library for the SSD1306 OLED screens #
 
 ## Example ##
-``
+```
 #include "devices/SSD1306I2C.h"
 
 using namespace g3rb3n;
@@ -24,7 +24,7 @@ void loop()
   oled.print("Hello world");
   oled.display();
 }
-``
+```
 ## Main features ##
 - Multiple communication bus protocols support: I2C and SPI.
 - Multiple buffering options: Direct write, full buffered, page buffered, byte buffered.
