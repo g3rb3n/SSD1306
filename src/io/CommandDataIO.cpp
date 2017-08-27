@@ -5,6 +5,8 @@
 #define BUS_COMMAND 0x00
 #define BUS_DATA 0x40
 
+//#define DEBUG
+
 namespace g3rb3n
 {
 
@@ -54,8 +56,8 @@ namespace g3rb3n
       Serial.print(c[i], 16);
       Serial.print(' ');
     }
-    #endif
     Serial.println();
+    #endif
     iobus->write(BUS_COMMAND, c, len);
   }
 

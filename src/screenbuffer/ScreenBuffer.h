@@ -17,8 +17,8 @@ namespace g3rb3n
       const uint16_t size;
 
     protected:
-      uint8_t pages = 8;
-      uint8_t columns = 128;
+      uint8_t pages;
+      uint8_t columns;
       uint8_t depth;
       uint8_t* buffer;
 

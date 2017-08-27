@@ -1,23 +1,23 @@
-#include "PartialUpdateScreenBuffer.h"
+#include "ByteUpdateScreenBuffer.h"
 
 namespace g3rb3n
 {
   
-  PartialUpdateScreenBuffer::PartialUpdateScreenBuffer(uint8_t _width, uint8_t _height, uint8_t _depth)
+  ByteUpdateScreenBuffer::ByteUpdateScreenBuffer(uint8_t _width, uint8_t _height, uint8_t _depth)
   :
   ScreenBuffer(_width, _height, _depth),
   diffSize( (size + 7) / 8 ),
-  diff(new uint8_t[128])
+  diff(new uint8_t[(size + 7) / 8])
   {
     for (uint8_t i = 0 ; i < diffSize ; ++i)
       diff[i] = 0xFF;
   }
 
-  PartialUpdateScreenBuffer::~PartialUpdateScreenBuffer()
+  ByteUpdateScreenBuffer::~ByteUpdateScreenBuffer()
   {
   }
   
-  uint16_t PartialUpdateScreenBuffer::find(uint16_t pos, uint8_t value)
+  uint16_t ByteUpdateScreenBuffer::find(uint16_t pos, uint8_t value)
   {
     uint16_t i;
     for (i = pos ; i < size ; ++i)
@@ -29,9 +29,9 @@ namespace g3rb3n
   }
     
   //#define DEBUG
-  void PartialUpdateScreenBuffer::display(BufferWriter& bw)
+  void ByteUpdateScreenBuffer::display(BufferWriter& bw)
   {
-    //    Serial.println("PartialUpdateScreenBuffer::display");
+    //    Serial.println("ByteUpdateScreenBuffer::display");
     //    Serial.print("diffSize: ");
     //    Serial.println(diffSize);
     #ifdef DEBUG
@@ -74,30 +74,30 @@ namespace g3rb3n
       diff[i] = 0;
   }
 
-  void PartialUpdateScreenBuffer::setDiff(uint16_t pos)
+  void ByteUpdateScreenBuffer::setDiff(uint16_t pos)
   {
     uint8_t byte = pos / 8;
     uint8_t bit = pos % 8;
     diff[byte] |= (0x01 << bit);
   }
   
-  void PartialUpdateScreenBuffer::setByte(uint8_t row, uint8_t col, uint8_t byte)
+  void ByteUpdateScreenBuffer::setByte(uint8_t row, uint8_t col, uint8_t byte)
   {
     if (offScreen(col, row*8)) return;
 
-    setDiff(row * 128 + col);
+    setDiff(row * columns + col);
     ScreenBuffer::setByte(row, col, byte);
   }
 
-  void PartialUpdateScreenBuffer::set(uint8_t x, uint8_t y, Pixel pixel)
+  void ByteUpdateScreenBuffer::set(uint8_t x, uint8_t y, Pixel pixel)
   {
     if (offScreen(x,y)) return;
 
-    setDiff(y / 8 * 128 + x);
+    setDiff(y / 8 * columns + x);
     ScreenBuffer::set(x, y, pixel);
   }
   
-  void PartialUpdateScreenBuffer::reset(Pixel p)
+  void ByteUpdateScreenBuffer::reset(Pixel p)
   {
     for (uint16_t i = 0 ; i < size ; ++i)
     {
@@ -110,7 +110,7 @@ namespace g3rb3n
     ScreenBuffer::reset(p);
   }
 
-  void PartialUpdateScreenBuffer::reset()
+  void ByteUpdateScreenBuffer::reset()
   {
     ScreenBuffer::reset();
   }

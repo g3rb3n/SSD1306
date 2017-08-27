@@ -135,6 +135,7 @@ namespace g3rb3n
 
   void Graphics2D::drawRectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height) 
   {
+    height = height - 1; //Using outer size, draw in borders
     drawHorizontalLine(x, y, width);
     drawHorizontalLine(x, y + height, width);
     drawVerticalLine(x, y, height);

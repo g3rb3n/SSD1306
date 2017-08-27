@@ -10,6 +10,8 @@ namespace g3rb3n
     height(_height),
     depth(_depth),
     size(_width * _height / 8),
+    pages(_height / 8),
+    columns(_width),
     buffer(new uint8_t[_width * _height / 8])
   {
     

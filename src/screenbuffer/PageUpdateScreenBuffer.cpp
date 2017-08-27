@@ -22,7 +22,7 @@ namespace g3rb3n
       {
         continue;
       }
-      bw.writeBufferBytes(page*128, buffer, 128);
+      bw.writeBufferBytes(page*columns, buffer, columns);
 /*
       uint16_t start = page * columns;
       uint16_t end = start + columns;

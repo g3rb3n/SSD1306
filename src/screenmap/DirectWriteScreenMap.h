@@ -19,25 +19,13 @@ namespace g3rb3n
     private:
       ScreenControl* ctrl;
       CommandDataIO* io;
-      uint16_t _width;
-      uint16_t _height;
-  //    SSD1306Control* ctrl;
 
     public:
-      DirectWriteScreenMap(ScreenControl* ctrl, CommandDataIO* io, uint16_t width, uint16_t height);
+      DirectWriteScreenMap(ScreenControl* ctrl, CommandDataIO* io);
 
-      uint8_t setBitMap(uint16_t page, uint16_t col, uint8_t* data, uint16_t pages, uint16_t columns);
-      uint8_t setBitMap(uint16_t page, uint16_t col, BitMap& bitmap);
+      uint8_t setBitMap(uint8_t* data, uint16_t page, uint16_t col, uint16_t pages, uint16_t columns);
+      uint8_t setBitMap(BitMap& bitmap, uint16_t page, uint16_t col);
       
-      inline uint16_t width() const
-      {
-        return _width;
-      }
-
-      inline uint16_t height() const
-      {
-        return _height;
-      }
   };
 
 }

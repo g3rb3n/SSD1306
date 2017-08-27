@@ -17,6 +17,11 @@ namespace g3rb3n
       AddressingMode addressing = AddressingMode::Horizontal;
       bool isFlippedHorizontal = false;
 
+      uint8_t columns = 128;
+      uint8_t pages = 8;
+      uint8_t columnOffset = 0;
+      uint8_t pageOffset = 0;
+
       //Write buffer control
       uint8_t currentPage = 255;
       uint8_t currentCol = 255;
@@ -31,6 +36,7 @@ namespace g3rb3n
       
       void begin(void);
 
+      void setLayout(uint8_t _colOffset, uint8_t pageOffset, uint8_t columns, uint8_t pages);
       uint8_t writeBufferByte(uint16_t pos, uint8_t byte);
       uint8_t writeBufferBytes(uint16_t pos, uint8_t* byte, uint16_t len);
 
@@ -63,6 +69,7 @@ namespace g3rb3n
       void setDisplayOffset(uint8_t offset);
       void setSegmentRemapOn(bool on);
       void setComOutputScanDirRemapOn(bool on);
+      
       void setMultiplexRatio(uint8_t ratio);
       void setComPinsHardwareConfig(bool alternative, bool com);
       

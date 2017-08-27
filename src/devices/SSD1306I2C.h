@@ -18,6 +18,7 @@ namespace g3rb3n
   {
     public:
       SSD1306I2C(uint8_t addr);
+      SSD1306I2C(uint8_t addr, uint8_t width, uint8_t height);
       
       void begin();
       void display();

@@ -5,21 +5,7 @@ using namespace g3rb3n;
 
 Fixed8x5 font;
 
-uint8_t cols = 5;
-uint8_t rows = 8;
-uint8_t bitmap[5*8];
-
-
-uint8_t empty[] = {
-  0x00,
-  0x00,
-  0x00,
-  0x00,
-  0x00,
-  0x00,
-  0x00,
-  0x00
-};
+uint8_t empty[] = {0x00};
 
 SSD1306I2CNoBuffer oled(0x3C);
 uint32_t count = 0;
@@ -30,7 +16,6 @@ void setup()
 {
   setupSerial();
   setupOled();
-  setupFont();
   test();
 }
 
@@ -43,31 +28,20 @@ void setupSerial()
 void setupOled()
 {
   oled.begin();
+  oled.setLayout(6, 128, 0, 32);
   Serial.println("After begin");
-}
-
-void setupFont()
-{
-  uint8_t bm[5];
-  for (char c = 'A' ; c < 'I' ; ++c)
-  {
-    font.get(bm, c);
-    for(uint8_t i = 0; i < 5 ; ++i)
-    {
-      bitmap[(c - 'A') * 5 + i] = bm[i];
-    }
-  }
 }
 
 void test()
 {
-  oled.flipVertical(true);
-  oled.flipHorizontal(true);
+  //oled.flipVertical(true);
+  //oled.flipHorizontal(true);
   clear();
-  setAlphabet(0);
+  //setChar('A', 0, 0);
+  displayAlphabet();
   //oled.setHorizontalScroll(HorizontalDirection::Right, TimeInterval::_5frames, 0, 7);
-  oled.setVerticalHorizontalScroll(VerticalHorizontalDirection::VerticalRight, TimeInterval::_5frames, 0, 7, 0);
-  oled.enableScroll(true);  
+  //oled.setVerticalHorizontalScroll(VerticalHorizontalDirection::VerticalRight, TimeInterval::_5frames, 0, 7, 0);
+  //oled.enableScroll(true);  
 }
 
 void setFlipHorizontal()
@@ -168,16 +142,87 @@ void clear()
 
 void displayAlphabet()
 {
+  Serial.println("Display alphabet");
   setAlphabet(0);
-  //setAlphabet(60);
-  //setAlphabet(120);
+}
+
+void setChar(char ch, uint8_t page, uint8_t col)
+{
+  uint8_t cbm[5*8];
+  font.get(cbm, ch);
+  oled.setBitMap(empty, page, col  , 1, 1);
+  oled.setBitMap(cbm  , page, col+1, 1, 5);
+  oled.setBitMap(empty, page, col+6, 1, 1);
+  oled.setBitMap(empty, page, col+7, 1, 1);  
 }
 
 void setAlphabet(uint8_t pos)
 {
-  oled.setBitMap(0, pos, empty, 8, 1);
-  oled.setBitMap(0, pos+1, bitmap, rows, cols);
-  oled.setBitMap(0, pos+cols+1, empty, 8, 1);  
+  char ch = 'A';
+  for (uint8_t p = 0 ; p < 8 ; ++p)
+  {
+    for (uint8_t c = 0 ; c < 8 ; ++c, ++ch)
+    {
+      if (ch > 'Z') ch = 'A'; 
+      setChar(ch, p, c*8);
+    }
+  }
+}
+
+void setRow()
+{
+  Serial.print("Page ");
+  uint8_t page = readInt();
+  Serial.println(page);
+  Serial.print("Start ");
+  uint8_t start = readInt();
+  Serial.println(start);
+  Serial.print("End ");
+  uint8_t end = readInt();
+  Serial.println(end);
+  
+  uint8_t bm[] = {0xFF};
+  for (uint8_t i = start ; i < end ; ++i)
+    oled.setBitMap(bm, page, i, 1, 1);
+}
+
+void setCol()
+{
+  Serial.print("Column ");
+  uint8_t col = readInt();
+  Serial.println(col);
+  Serial.print("Start ");
+  uint8_t start = readInt();
+  Serial.println(start);
+  Serial.print("End ");
+  uint8_t end = readInt();
+  Serial.println(end);
+  
+  uint8_t bm[] = {0xFF};
+  for (uint8_t i = start ; i < end ; ++i)
+    oled.setBitMap(bm, i, col, 1, 1);
+}
+
+void setLayout()
+{
+  Serial.print("Column offset");
+  uint8_t col = readInt();
+  Serial.println(col);
+
+  Serial.print("Page offset ");
+  uint8_t page = readInt();
+  Serial.println(page);
+
+  Serial.print("Columns ");
+  uint8_t cols = readInt();
+  Serial.println(cols);
+  
+  Serial.print("Pages ");
+  uint8_t pages = readInt();
+  Serial.println(pages);
+  
+  oled.setLayout(col, page, cols, pages);
+
 }
 
 bool readBool()
@@ -241,6 +286,9 @@ void loop()
       case 'h': setFlipHorizontal(); break;
       case 's': setStartLine(); break;
       case 'o': setDisplayOffset(); break;
+      case 'R': setRow(); break;
+      case 'C': setCol(); break;
+      case 'm': setLayout(); break;
       default: printOptions();
     }
   }

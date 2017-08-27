@@ -1,5 +1,5 @@
-#ifndef _SSD1306I2CNoBuffer_H_
-#define _SSD1306I2CNoBuffer_H_
+#ifndef _SSD1306I2CNoBuffer64x48_H_
+#define _SSD1306I2CNoBuffer64x48_H_
 
 #include "io/I2CBus.h"
 #include "io/CommandDataIO.h"
@@ -10,7 +10,7 @@
 namespace g3rb3n
 {
 
-  class SSD1306I2CNoBuffer 
+  class SSD1306I2CNoBuffer64x48 
   :
   public CommandDataIO, 
   public SSD1306Driver, 
@@ -18,10 +18,9 @@ namespace g3rb3n
   public DirectWriteScreenMap
   {
     public:
-      SSD1306I2CNoBuffer(uint8_t addr);
+      SSD1306I2CNoBuffer64x48(uint8_t addr);
       
       void begin();
-      void setLayout(uint8_t p, uint8_t c, uint8_t pc, uint8_t cc);
   };
   
 }

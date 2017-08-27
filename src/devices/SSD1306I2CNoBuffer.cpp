@@ -7,7 +7,7 @@ namespace g3rb3n
     CommandDataIO(new I2CBus(0x3C)),
     SSD1306Driver(this),
     SSD1306ScreenControl(this),
-    DirectWriteScreenMap(this, this, 128, 64)
+    DirectWriteScreenMap(this, this)
   {
   }
   
@@ -16,5 +16,11 @@ namespace g3rb3n
     //CommandDataIO::begin();
     SSD1306Driver::begin();
     //DirectWriteScreenMap::begin();
+  }
+
+  void SSD1306I2CNoBuffer::setLayout(uint8_t p, uint8_t c, uint8_t pc, uint8_t cc)
+  {
+    SSD1306Driver::setLayout(p, c, pc, cc);
+    SSD1306ScreenControl::setLayout(p, c, pc, cc);
   }
 }

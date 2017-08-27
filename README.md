@@ -78,3 +78,12 @@ Basic 2D graphics for pixel based operations.
 - GraphicsPrint
 For writing fonts to the screen buffer.
 
+## ToDo ##
+- Fix bitmap bug when bitmap goes over page edge.
+- Optimize 8 micros -> 5 micros on ESP8266 CPU@160MHz I2C@700kHz.
+- Write automated tests.
+- Use macro from platform for enabling Wire.getClock().
+- Fix macros in Graphics2D
+- Include more fonts.
+- Include more OLED boards: 64x48 monochrome, Nokia 5110, 2 color OLED, full color OLED, ...
+ 

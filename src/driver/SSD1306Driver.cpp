@@ -117,6 +117,14 @@ namespace g3rb3n
     setAddressingMode(addressing);
   }
 
+  void SSD1306Driver::setLayout(uint8_t _colOffset, uint8_t _pageOffset, uint8_t _columns, uint8_t _pages)
+  {
+    columnOffset = _colOffset;
+    pageOffset = _pageOffset;
+    columns = _columns;
+    pages = _pages;
+  }
+
   AddressingMode SSD1306Driver::addressingMode() const
   {
     return addressing;
@@ -344,8 +352,8 @@ namespace g3rb3n
    */
   uint8_t SSD1306Driver::writeBufferByte(uint16_t pos, uint8_t byte)
   {
-    uint8_t page = pos / 128;
-    uint8_t col = pos % 128;
+    uint8_t page = pos / columns + pageOffset;
+    uint8_t col = pos % columns + columnOffset;
     if (page != currentPage)
     {
       setPageAddress(page);
@@ -367,12 +375,12 @@ namespace g3rb3n
   uint8_t SSD1306Driver::writeBufferBytes(uint16_t pos, uint8_t* byte, uint16_t len)
   {
     uint16_t toWrite;
-    uint8_t page = pos / 128;
-    uint8_t col = pos % 128;
+    uint8_t page = pos / columns + pageOffset;
+    uint8_t col = pos % columns + columnOffset;
 
     //uint8_t cmd[] = {0x20, 0, 0x21, col, 127, 0x22, page, 7};
     //io->command(cmd, 8);
-    uint8_t cmd[] = {0x21, col, 127, 0x22, page, 7};
+    uint8_t cmd[] = {0x21, col, columns - 1, 0x22, page, pages - 1};
     io->command(cmd, 6);
     io->data(byte + pos, len);
   }
