@@ -21,6 +21,11 @@ namespace g3rb3n
   {
   }
 
+  uint8_t* ScreenBuffer::_buffer()
+  {
+    return buffer;
+  }
+  
   void ScreenBuffer::begin()
   {}
 

@@ -26,6 +26,8 @@ namespace g3rb3n
       ScreenBuffer(uint8_t width, uint8_t height, uint8_t depth);
       ~ScreenBuffer();
 
+      uint8_t* _buffer();
+
       void begin();
       
       virtual void set(uint8_t x, uint8_t y, Pixel pixel);
