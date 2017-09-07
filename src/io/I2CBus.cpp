@@ -1,28 +1,11 @@
 #include "I2CBus.h"
+#include "I2CBus_hw.h"
 
 #include <Arduino.h>
 #include <Wire.h>
 
 #define I2CBUS_COMMAND 0x00
 #define I2CBUS_DATA 0x40
-
-#ifdef ARDUINO_ARCH_ESP8266
-  #define I2CBUS_SET_PINS_ON_BEGIN
-#elif ARDUINO_ARCH_AVR
-  #define I2CBUS_NO_SET_PINS
-#else
-  #warning "No support for setting SDL and SDA pins"
-#endif
-
-#ifdef ARDUINO_ARCH_ESP8266
-  #define I2CBUS_FREQUENCY_BY_FUNCTION
-  #define I2CBUS_FREQUENCY 700000
-#elif ARDUINO_ARCH_AVR
-  #define I2CBUS_FREQUENCY_BY_FUNCTION
-  #define I2CBUS_FREQUENCY 400000
-#else
-  #warning "No support for setting I2C bus frequency"
-#endif
 
 namespace g3rb3n
 {
