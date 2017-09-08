@@ -14,7 +14,7 @@ namespace g3rb3n
     _address(address)
   {
     Wire.begin();
-    setFrequency(I2CBUS_FREQUENCY);
+    //setFrequency(I2CBUS_FREQUENCY);
   }
   
   
@@ -29,7 +29,7 @@ namespace g3rb3n
     _address(address)
   {
     setPins(sda, scl);
-    setFrequency(I2CBUS_FREQUENCY);
+    //setFrequency(I2CBUS_FREQUENCY);
   }
 
   I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl, uint32_t freq):

@@ -12,7 +12,7 @@ using namespace g3rb3n;
 //ScreenBuffer buffer(128, 64, 1);
 //PageUpdateScreenBuffer buffer(128, 64, 1);
 ByteUpdateScreenBuffer buffer(128, 64, 1);
-I2CBus io(0x3C);
+I2CBus io(0x3C, 400000);
 SSD1306 oled(&io, &buffer);
 
 long count = 0;
