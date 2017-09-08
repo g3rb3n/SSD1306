@@ -14,47 +14,62 @@ namespace g3rb3n
     _address(address)
   {
     Wire.begin();
-    
-    #ifdef I2CBUS_FREQUENCY_BY_TWBR
-    TWBR = I2CBUS_TWBR_400KHZ;
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION
-    Wire.setClock(I2CBUS_FREQUENCY);
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_FREQUENCY
-    Wire.setFrequency(I2CBUS_FREQUENCY);
-    #endif
+    setFrequency(I2CBUS_FREQUENCY);
   }
+  
+  
+  I2CBus::I2CBus(uint8_t address, uint32_t clock):
+    _address(address)
+  {
+    Wire.begin();
+    setFrequency(clock);
+  }  
 
   I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl):
     _address(address)
   {
-    #ifdef I2CBUS_SET_PINS_ON_PROPERTIES
-        Wire.scl_pin = scl;
-        Wire.sda_pin = sda;
-        Wire.begin();
-    #endif
-    #ifdef I2CBUS_SET_PINS_ON_BEGIN
-        Wire.begin(scl, sda);
-    #endif
-    #ifdef I2CBUS_NO_SET_PINS
-      Wire.begin();
-    #endif
+    setPins(sda, scl);
+    setFrequency(I2CBUS_FREQUENCY);
+  }
 
-    #ifdef I2CBUS_FREQUENCY_BY_TWBR
-    TWBR = I2CBUS_TWBR_400KHZ;
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION
-    Wire.setClock(I2CBUS_FREQUENCY);
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_FREQUENCY
-    Wire.setFrequency(I2CBUS_FREQUENCY);
-    #endif
+  I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl, uint32_t freq):
+    _address(address)
+  {
+    setPins(sda, scl);
+    setFrequency(freq);
   }
 
   I2CBus::~I2CBus()
   {}
 
+  void I2CBus::setFrequency(uint32_t freq)
+  {
+    #ifdef I2CBUS_FREQUENCY_BY_TWBR
+      #error "Setting clock by TWBR is not implemented"
+    #endif
+    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_CLOCK
+      Wire.setClock(freq);
+    #endif
+    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_FREQUENCY
+      Wire.setFrequency(freq);
+    #endif    
+  }
+
+  void I2CBus::setPins(uint8_t sda, uint8_t scl)
+  {
+    #ifdef I2CBUS_SET_PINS_ON_PROPERTIES
+      Wire.scl_pin = scl;
+      Wire.sda_pin = sda;
+      Wire.begin();
+    #endif
+    #ifdef I2CBUS_SET_PINS_ON_BEGIN
+        Wire.begin(scl, sda);
+    #endif
+    #ifdef I2CBUS_SET_PINS_NOT_IMPLEMENTED
+      Wire.begin();
+    #endif
+  }
+  
   uint8_t I2CBus::address() const
   {
     return _address;

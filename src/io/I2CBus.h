@@ -13,7 +13,9 @@ namespace g3rb3n
 
     public:
       I2CBus(uint8_t address);
-      I2CBus(uint8_t address, uint8_t sda, uint8_t cls);
+      I2CBus(uint8_t address, uint8_t sda, uint8_t scl);
+      I2CBus(uint8_t address, uint32_t clock);
+      I2CBus(uint8_t address, uint8_t sda, uint8_t scl, uint32_t clock);
       ~I2CBus();
 
       uint8_t address() const;
@@ -22,6 +24,10 @@ namespace g3rb3n
       void write(uint8_t reg, uint8_t* data, uint16_t len) const;
       void read(uint8_t reg, uint8_t& data) const;
       void read(uint8_t reg, uint8_t* data, uint16_t len) const;
+
+    private:
+      void setFrequency(uint32_t);
+      void setPins(uint8_t, uint8_t);
   };
 
 }
