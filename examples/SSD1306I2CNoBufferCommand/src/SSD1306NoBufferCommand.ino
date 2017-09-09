@@ -1,5 +1,4 @@
-#include "io/SPIBus.h"
-#include "devices/SSD1306NoBuffer.h"
+#include "devices/SSD1306I2CNoBuffer.h"
 #include "fonts/Fixed8x5.h"
 
 using namespace g3rb3n;
@@ -8,8 +7,7 @@ Fixed8x5 font;
 
 uint8_t empty[] = {0x00};
 
-SPIBus io(D3,D2,D1);
-SSD1306NoBuffer oled(&io);
+SSD1306I2CNoBuffer oled(0x3C);
 uint32_t count = 0;
 uint8_t pos = 0;
 bool forward = true;
