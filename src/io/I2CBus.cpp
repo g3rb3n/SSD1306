@@ -14,46 +14,31 @@ namespace g3rb3n
     _address(address)
   {
     Wire.begin();
-    //setFrequency(I2CBUS_FREQUENCY);
   }
   
   
-  I2CBus::I2CBus(uint8_t address, uint32_t clock):
+  I2CBus::I2CBus(uint8_t address, uint32_t frequency):
     _address(address)
   {
     Wire.begin();
-    setFrequency(clock);
+    Wire.setClock(frequency);
   }  
 
   I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl):
     _address(address)
   {
     setPins(sda, scl);
-    //setFrequency(I2CBUS_FREQUENCY);
   }
 
-  I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl, uint32_t freq):
+  I2CBus::I2CBus(uint8_t address, uint8_t sda, uint8_t scl, uint32_t frequency):
     _address(address)
   {
     setPins(sda, scl);
-    setFrequency(freq);
+    Wire.setClock(frequency);
   }
 
   I2CBus::~I2CBus()
   {}
-
-  void I2CBus::setFrequency(uint32_t freq)
-  {
-    #ifdef I2CBUS_FREQUENCY_BY_TWBR
-      #error "Setting clock by TWBR is not implemented"
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_CLOCK
-      Wire.setClock(freq);
-    #endif
-    #ifdef I2CBUS_FREQUENCY_BY_FUNCTION_SET_FREQUENCY
-      Wire.setFrequency(freq);
-    #endif    
-  }
 
   void I2CBus::setPins(uint8_t sda, uint8_t scl)
   {
@@ -65,7 +50,7 @@ namespace g3rb3n
     #ifdef I2CBUS_SET_PINS_ON_BEGIN
         Wire.begin(scl, sda);
     #endif
-    #ifdef I2CBUS_SET_PINS_NOT_IMPLEMENTED
+    #ifndef I2CBUS_SET_PINS
       Wire.begin();
     #endif
   }
