@@ -2,7 +2,8 @@
 #include "screenbuffer/PageUpdateScreenBuffer.h"
 #include "screenbuffer/ByteUpdateScreenBuffer.h"
 #include "io/I2CBus.h"
-
+#include "io/I2CBus_hw.h"
+#include "io/SPIBus.h"
 #include <Wire.h>
 
 //#define WIRE_SUPPORTS_GET_CLOCK
@@ -12,7 +13,9 @@ using namespace g3rb3n;
 //ScreenBuffer buffer(128, 64, 1);
 //PageUpdateScreenBuffer buffer(128, 64, 1);
 ByteUpdateScreenBuffer buffer(128, 64, 1);
-I2CBus io(0x3C, 400000);
+//I2CBus io(0x3C, I2CBUS_FREQUENCY_MAX);
+//I2CBus io(0x3C, 400000);
+SPIBus io(D3, D2, D1);
 SSD1306 oled(&io, &buffer);
 
 long count = 0;
