@@ -366,6 +366,7 @@ namespace g3rb3n
     }
     ++currentCol;
     io->data(byte);
+    return 0;
   }
 
   /**
@@ -383,5 +384,6 @@ namespace g3rb3n
     uint8_t cmd[] = {0x21, col, columns - 1, 0x22, page, pages - 1};
     io->command(cmd, 6);
     io->data(byte + pos, len);
+    return 0;
   }
 }
