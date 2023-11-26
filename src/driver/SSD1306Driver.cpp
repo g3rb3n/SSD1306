@@ -381,7 +381,7 @@ namespace g3rb3n
 
     //uint8_t cmd[] = {0x20, 0, 0x21, col, 127, 0x22, page, 7};
     //io->command(cmd, 8);
-    uint8_t cmd[] = {0x21, col, columns - 1, 0x22, page, pages - 1};
+    uint8_t cmd[] = {0x21, col, columns + columnOffset - 1, 0x22, page, pages + pageOffset - 1};
     io->command(cmd, 6);
     io->data(byte + pos, len);
     return 0;
