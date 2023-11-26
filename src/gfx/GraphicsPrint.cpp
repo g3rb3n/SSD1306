@@ -84,7 +84,7 @@ namespace g3rb3n
     drawBitmap(bytes, x, y, font->width(), font->height());
   }
 
-  void  GraphicsPrint::drawChar(uint8_t x, uint8_t y, uint8_t c)
+  void GraphicsPrint::drawChar(uint8_t x, uint8_t y, uint8_t c)
   {
     if (y % 8 == 0 && font->height() % 8 == 0)
     {
