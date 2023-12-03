@@ -1,0 +1,22 @@
+{
+    "name": "SSD1306",
+    "keywords": "oled, display",
+    "description": "SSD1306 display driver",
+    "homepage": "https://github.com/g3rb3n/SSD1306",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/g3rb3n/SSD1306.git"
+    },
+    "version": "1.0.0",
+    "authors": {
+      "name": "Gerben van Eerten",
+      "url": "https://gerbenvaneerten.nl"
+    },
+    "exclude": [
+    ],
+    "frameworks": "arduino",
+    "platforms": "*",
+    "dependencies":{
+    }
+  }
+  
